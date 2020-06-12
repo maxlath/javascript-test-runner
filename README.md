@@ -1,27 +1,14 @@
-# JavaScript Test Runner
+# JavaScript Test Runner customized
 
-## Overview
+A customized version of [javascript-test-runner](https://github.com/g3offrey/javascript-test-runner) for the needs of [inventaire](https://github.com/inventaire/inventaire/)
 
-JavaScript Test Runner add codelens near `describe`, `it`, and `test` keywords permitting to run associated tests and outputing result in a Code integrated terminal.
-Currently it works **out of the box** for **Mocha** and **Jest** test runner.
+![screenshot](https://raw.githubusercontent.com/maxlath/javascript-test-runner/master/screenshot.jpg)
 
-## Demo
-
-![demo](./ressources//demo.gif)
-
-## Available configuration
-
-`javascript-test-runner.additionalArgs` : add any additional cli args here, they will be sent to Mocha or Jest when you'll run test
-_Example_ : "--watch"
-
-## Compatibility
-
-This extension works currently with :
-
-* Mocha
-* Jest
-
-## Contribute
-
-Please feel free to fork, improve, make pull requests or fill issues.
-I'll be glad to fix bugs you encountered or improve the extension.
+## Install
+```
+cd ~/.vscode/extensions
+git clone https://github.com/maxlath/javascript-test-runner/
+cd javascript-test-runner
+npm install
+npm run vscode:prepublish
+```
