@@ -1,10 +1,12 @@
 export default [
     {
         language: "typescript",
-        scheme: "file"
+        scheme: "file",
+        pattern: "**/test*/**"
     },
     {
         language: "javascript",
-        scheme: "file"
+        scheme: "file",
+        pattern: "**/test*/**"
     }
 ]
