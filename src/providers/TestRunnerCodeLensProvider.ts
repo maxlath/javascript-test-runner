@@ -1,7 +1,7 @@
 import { CodeLensProvider, TextDocument, CancellationToken, CodeLens, Position, Range, Uri, workspace } from "vscode"
 
 import TestRunnerCodeLens from "../codelens/TestRunnerCodeLens"
-import TestDebugRunnerCodeLens from "../codelens/TestDebugRunnerCodeLens"
+import TestQuickRunnerCodeLens from "../codelens/TestQuickRunnerCodeLens"
 import { codeParser } from "../parser/codeParser"
 
 function _getRootPath({uri}) {
@@ -28,7 +28,7 @@ export default class TestRunnerCodeLensProvider implements CodeLensProvider {
                     rootPath,
                     document.fileName
                 ))
-                acc.push(new TestDebugRunnerCodeLens(
+                acc.push(new TestQuickRunnerCodeLens(
                     createRangeObject(loc.start),
                     testName,
                     rootPath,

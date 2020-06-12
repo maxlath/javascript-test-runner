@@ -15,7 +15,7 @@ function _getNewTerminal(): Terminal {
     return term
 }
 
-async function runTest (testName, rootPath, fileName, isDebug = false) {
+const RunTest = apiTestScriptName => async (testName, rootPath, fileName, isDebug = false) => {
     const testRunner = await getTestRunner(rootPath)
     const additionalArgs: string = workspace.getConfiguration("javascript-test-runner").get("additionalArgs")
     const term = _getNewTerminal()
@@ -38,10 +38,17 @@ async function runTest (testName, rootPath, fileName, isDebug = false) {
             internalConsoleOptions: "openOnSessionStart"
         })
     } else {
-        const commandLine = testRunner === TestRunner.jest
-            ? `${rootPath}/node_modules/.bin/jest ${fileName} --testNamePattern="${testName}" ${additionalArgs}`
-            : `${rootPath}/node_modules/.bin/mocha ${fileName} --grep="${testName}" ${additionalArgs}`
-
+        let commandLine
+        if (fileName.match('/api/')) {
+            // As the test runner isn't mocha but a custom script, it's simpler to pass mocha options
+            // as environment variables
+            const env = `export MOCHA_GREP="${testName}"`
+            commandLine = `${env}; cd ${rootPath} && npm run ${apiTestScriptName} ${fileName}`;
+        } else {
+            commandLine = testRunner === TestRunner.jest
+                ? `${rootPath}/node_modules/.bin/jest ${fileName} --testNamePattern="${testName}" ${additionalArgs}`
+                : `${rootPath}/node_modules/.bin/mocha ${fileName} --grep="${testName}" ${additionalArgs}`;
+        }
 
         term.sendText(commandLine, true)
         term.show(true)
@@ -50,4 +57,5 @@ async function runTest (testName, rootPath, fileName, isDebug = false) {
 }
 
 
-export default runTest
+export const runTestCommand = RunTest('test-api')
+export const runTestQuickCommand = RunTest('test-api-quick')
